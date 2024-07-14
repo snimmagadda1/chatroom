@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: chatservice
+  security:
+    user:
+      name: 'happy@example.com'
+      password: '12345'
