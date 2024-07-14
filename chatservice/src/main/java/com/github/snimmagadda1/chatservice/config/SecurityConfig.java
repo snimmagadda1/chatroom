@@ -43,7 +43,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             (requests) ->
                 requests.requestMatchers("/login").permitAll().anyRequest().authenticated())
-        .oauth2Login(Customizer.withDefaults())
+        // .oauth2Login(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
     return http.build();
   }
