@@ -28,6 +28,11 @@ export const XhrInterceptor: HttpInterceptorFn = (
     );
   }
 
+  const token = sessionStorage.getItem('access_token');
+  if (token) {
+    httpHeaders.append('Authorization', `Bearer ${token}`);
+  }
+
   // if (xsrf) {
   //   httpHeaders = httpHeaders.append('X-XSRF-TOKEN', xsrf);
   // }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chat-room',
@@ -19,4 +20,12 @@ import { Component } from '@angular/core';
   `,
   styleUrl: './chat-room.component.scss',
 })
-export class ChatRoomComponent {}
+export class ChatRoomComponent implements OnInit{
+  constructor(private readonly http: HttpClient) {}
+  ngOnInit() {
+    // Get protected resource
+    this.http.get('http://localhost:8080/user').subscribe((res) => {
+      console.warn('Got secure info: ', res);
+    });
+  }
+}

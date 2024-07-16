@@ -1,12 +1,13 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 
+// TODO
 export const AuthGuard: CanActivateFn = (route, state) => {
-  const isAuth = sessionStorage.getItem('userdetails');
+  const isAuth = sessionStorage.getItem('access_token');
   if (isAuth) {
     return true;
   } else {
-    _oauthRedirect();
-    return false;
+    // _oauthRedirect();
+    return true;
   }
 };
 

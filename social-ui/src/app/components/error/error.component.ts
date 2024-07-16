@@ -4,18 +4,18 @@ import { AuthService } from '../../services';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-error',
   standalone: true,
   imports: [FormsModule],
   template: `
-    <p>Callback component!</p>
+    <p>ERROR</p>
   `,
-  styleUrl: './callback.component.scss',
+  styleUrl: './error.component.scss',
 })
-export class CallbackComponent implements OnInit {
+export class ErrorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-      console.warn('CALLBACK LOGIC HAPPENS HERE');
+      console.error('ERROR')
   }
 }
