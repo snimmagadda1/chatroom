@@ -18,8 +18,11 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	// implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+	// implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation("org.xerial:sqlite-jdbc:3.46.0.0")
+	implementation("org.hibernate.orm:hibernate-community-dialects:6.5.2.Final")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

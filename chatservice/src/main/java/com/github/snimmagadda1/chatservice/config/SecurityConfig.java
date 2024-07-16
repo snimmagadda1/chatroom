@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,9 +18,7 @@ public class SecurityConfig {
 
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-    http.securityContext((context) -> context.requireExplicitSave(false))
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-        .csrf()
+    http.csrf()
         .disable() // TODO
         .cors(
             corsCustomizer ->
@@ -41,24 +37,20 @@ public class SecurityConfig {
                       }
                     }))
         .authorizeHttpRequests(
-            (requests) ->
-                requests.requestMatchers("/login").permitAll().anyRequest().authenticated())
-        // .oauth2Login(Customizer.withDefaults())
-        .httpBasic(Customizer.withDefaults());
+            requests ->
+                requests
+                    .requestMatchers("/public/**", "/public/users", "/register")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .httpBasic(Customizer.withDefaults())
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     return http.build();
   }
 
   @Bean
-  public ClientRegistrationRepository clientRepository() {
-    ClientRegistration clientReg = clientRegistration();
-    return new InMemoryClientRegistrationRepository(clientReg);
-  }
-
-  private ClientRegistration clientRegistration() {
-    return CommonOAuth2Provider.GITHUB
-        .getBuilder("github")
-        .clientId("TODO")
-        .clientSecret("TODO")
-        .build();
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }
