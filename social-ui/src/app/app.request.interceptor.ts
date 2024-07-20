@@ -14,7 +14,9 @@ export const XhrInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ) => {
-  let user: User | null = null;
+  
+  // TODO: replace w/ JWT
+  let user: any | null = null;
   if (sessionStorage.getItem('userdetails')) {
     user = JSON.parse(sessionStorage.getItem('userdetails')!);
   }
@@ -33,6 +35,7 @@ export const XhrInterceptor: HttpInterceptorFn = (
     httpHeaders.append('Authorization', `Bearer ${token}`);
   }
 
+  // TODO: xsrf
   // if (xsrf) {
   //   httpHeaders = httpHeaders.append('X-XSRF-TOKEN', xsrf);
   // }
