@@ -1,3 +1,10 @@
+keycloak:
+  server-url: http://localhost:8081/
+  realm: chatappdev
+  client-id: admin-cli
+  username: admin
+  password: admin
+
 spring:
   application:
     name: chatservice
