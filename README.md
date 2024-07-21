@@ -10,6 +10,8 @@
 
 > A real time chatroom built with Angular & Java
 
+Building this in public for fun to explore messaging protocols & the e2e stack
+
 ## Author
 
 👤 **Sai N. Nimmagadda**
