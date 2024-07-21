@@ -2,10 +2,11 @@ spring:
   application:
     name: chatservice
   datasource:
-    url: jdbc:sqlite:chatservice.db
-    driver-class-name: org.sqlite.JDBC
+    url: jdbc:mysql://localhost:3306/keycloak
+    username: root
+    password: password
   jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect 
+    # database-platform: org.hibernate.community.dialect.SQLiteDialect 
     show-sql: true
     hibernate: 
       ddl-auto: none
@@ -13,13 +14,13 @@ spring:
       hibernate:
         format_sql: true
   security:
-    user:
-      name: 'happy@example.com'
-      password: '12345'
-    # oauth2:
-    #   resourceserver:
-    #     jwt:
-    #       issuer-uri: https://github.com
+    # user:
+    #   name: 'happy@example.com'
+    #   password: '12345'
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8180/realms/chatappdev/protocol/openid-connect/certs
     #   client:
     #     registration:
     #       github:

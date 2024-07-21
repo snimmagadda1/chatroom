@@ -4,11 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -18,6 +16,8 @@ public class SecurityConfig {
 
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+    jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
     http.csrf()
         .disable() // TODO
         .cors(
@@ -36,21 +36,16 @@ public class SecurityConfig {
                         return config;
                       }
                     }))
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             requests ->
-                requests
-                    .requestMatchers("/public/**", "/public/users", "/register")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
-        .httpBasic(Customizer.withDefaults())
-        .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                requests.requestMatchers("/public").permitAll().anyRequest().authenticated())
+        .oauth2ResourceServer(
+            oauth2ResourceServerCustomizer ->
+                oauth2ResourceServerCustomizer.jwt(
+                    jwtCustomizer ->
+                        jwtCustomizer.jwtAuthenticationConverter(jwtAuthenticationConverter)));
     return http.build();
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 }
