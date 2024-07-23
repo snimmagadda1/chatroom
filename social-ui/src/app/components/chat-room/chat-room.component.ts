@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../services';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
 import { catchError, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-chat-room',
@@ -43,11 +42,17 @@ import { KeycloakService } from 'keycloak-angular';
 export class ChatRoomComponent {
   private subscription = new Subscription();
 
-  constructor(public readonly userService: UserService) {
+  constructor(
+    public readonly userService: UserService,
+    private readonly router: Router
+  ) {
     this.subscription.add(
-      this.userService.fetchUser$().subscribe((user) => {
-        console.log('User:', user);
-      })
+      this.userService
+        .fetchUser$()
+        .pipe(catchError((err) => this.router.navigate(['/error'])))
+        .subscribe((user) => {
+          console.log('User:', user);
+        })
     );
   }
 }

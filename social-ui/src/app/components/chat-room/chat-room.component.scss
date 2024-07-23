@@ -15,6 +15,13 @@
     height: 90vh;
 }
 
+.header {
+    grid-area: header;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+}
+
 .current-user {
     grid-area: user;
     overflow: scroll;
