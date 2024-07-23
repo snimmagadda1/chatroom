@@ -10,28 +10,33 @@ import { KeycloakService } from 'keycloak-angular';
   standalone: true,
   imports: [CommonModule, AsyncPipe, JsonPipe],
   template: `
-    <ng-container>
-      <div class="room">
-        <div class="user-icons">
-          <!-- TODO: component -->
-          <div class="user-icon">U1</div>
-          <div class="user-icon">U2</div>
-          <div class="user-icon">U3</div>
-        </div>
-        <div class="chat-window">
-          <!-- TODO: component -->
-          <div class="message">Hello, this is a message.</div>
-          <div class="message">Another message here.</div>
-        </div>
+    <div class="wrapper">
+      <div class="header"></div>
+      <div class="current-user">
+        <p
+          class="auth-user"
+          *ngIf="userService.user$ | async as user; else loading"
+        >
+          {{ user | json }}
+        </p>
+        <ng-template #loading> Loading... </ng-template>
       </div>
-      <span
-        class="auth-user"
-        *ngIf="userService.user$ | async as user; else loading"
-      >
-        {{ user | json }}
-      </span>
-      <ng-template #loading> Loading... </ng-template>
-    </ng-container>
+      <div class="users">
+        <!-- TODO: component -->
+        <div class="user-icon">U1</div>
+        <div class="user-icon">U2</div>
+        <div class="user-icon">U3</div>
+        <div class="user-icon">U3</div>
+        <div class="user-icon">U3</div>
+        <div class="user-icon">U3</div>
+        <div class="user-icon">U3</div>
+      </div>
+      <div class="chat-window">
+        <!-- TODO: component -->
+        <div class="message">Hello, this is a message.</div>
+        <div class="message">Another message here.</div>
+      </div>
+    </div>
   `,
   styleUrl: './chat-room.component.scss',
 })

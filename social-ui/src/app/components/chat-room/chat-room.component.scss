@@ -1,7 +1,28 @@
-.room {
+.wrapper {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 50px 200px auto;
+    grid-template-areas:
+        'header    header    header    header    header    header    header    header    header    header    header    header'
+        'user      main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   main      main      main      main      main      main      main      main      main      main      main'
+        'sidebar   footer    footer    footer    footer    footer    footer    footer    footer    footer    footer    footer';
+    gap: 10px;
     height: 90vh;
+}
+
+.current-user {
+    grid-area: user;
+    overflow: scroll;
+    word-wrap: break-word;
+}
+
+.users {
+    grid-area: sidebar;
 }
 
 .user-icon {
@@ -17,12 +38,16 @@
 }
 
 .chat-window {
+    grid-area: main;
     background-color: #fff;
-    padding: 20px;
     overflow-y: auto;
     /* Scrollable content */
     display: flex;
     flex-direction: column;
+}
+
+.chat-window .message:first-child {
+    margin: 0;
 }
 
 .message {
