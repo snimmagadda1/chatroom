@@ -7,5 +7,9 @@ export const routes: Routes = [
   { path: '', redirectTo: 'chat', pathMatch: 'full' },
   { path: 'error', component: ErrorComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'chat', component: ChatRoomComponent, canActivate: [AuthGuard] },
+  {
+    path: 'chat',
+    component: ChatRoomComponent,
+    canActivate: [AuthGuard],
+  },
 ];
