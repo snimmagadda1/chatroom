@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
       <div class="users">
         <!-- TODO: component -->
         <div class="user-icon">U1</div>
-        <div class="user-icon">U2</div>
+        <div class="user-icon icon-active">U2</div>
         <div class="user-icon">U3</div>
         <div class="user-icon">U3</div>
         <div class="user-icon">U3</div>
@@ -35,6 +35,7 @@ import { Router } from '@angular/router';
         <div class="message">Hello, this is a message.</div>
         <div class="message">Another message here.</div>
       </div>
+      <div class="footer"></div>
     </div>
   `,
   styleUrl: './chat-room.component.scss',
