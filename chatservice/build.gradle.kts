@@ -20,6 +20,7 @@ repositories {
 dependencies {
 	// implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("com.mysql:mysql-connector-j:9.0.0")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")

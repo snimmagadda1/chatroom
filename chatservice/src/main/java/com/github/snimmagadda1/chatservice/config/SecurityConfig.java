@@ -39,8 +39,16 @@ public class SecurityConfig {
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
-            requests ->
-                requests.requestMatchers("/public").permitAll().anyRequest().authenticated())
+            requests -> {
+              requests.requestMatchers("/public").permitAll();
+              requests.requestMatchers("/app/**").permitAll();
+              requests.requestMatchers("/topic/**").permitAll();
+              requests
+                  .requestMatchers(
+                      "/", "/index.html", "/static/**", "main.css", "app.js", "gs-guide-websocket")
+                  .permitAll();
+              requests.anyRequest().denyAll();
+            })
         .oauth2ResourceServer(
             oauth2ResourceServerCustomizer ->
                 oauth2ResourceServerCustomizer.jwt(
