@@ -47,11 +47,12 @@ public class SecurityConfig {
                   .requestMatchers(
                       "/", "/index.html", "/static/**", "main.css", "app.js", "gs-guide-websocket")
                   .permitAll();
+              requests.requestMatchers("/user").authenticated();
               requests.anyRequest().denyAll();
             })
         .oauth2ResourceServer(
-            oauth2ResourceServerCustomizer ->
-                oauth2ResourceServerCustomizer.jwt(
+            resourceServer ->
+                resourceServer.jwt(
                     jwtCustomizer ->
                         jwtCustomizer.jwtAuthenticationConverter(jwtAuthenticationConverter)));
     return http.build();
